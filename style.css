@@ -158,6 +158,18 @@ section { position: relative; }
 
 .btn--block { width: 100%; padding: 16px 28px; }
 
+.btn-samples{
+  margin-top: 3%;
+  align-self: center;
+  color: white;
+  background-color: #23252b;
+}
+.btn-samples:hover{
+  color: white;
+  background-color: #0a0b0d;
+  border: 0.1em violet solid;
+}
+
 /* =========================================================
    Nav
    ========================================================= */
@@ -434,8 +446,12 @@ section { position: relative; }
   border-radius: var(--radius-lg);
   padding: 28px 24px 30px;
   overflow: hidden;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+
   transition: transform 0.4s var(--ease), border-color 0.4s var(--ease), background 0.4s var(--ease);
-  cursor: default;
+  cursor: pointer;
 }
 
 .card::before {
