@@ -191,12 +191,15 @@ document.addEventListener('DOMContentLoaded', () => {
   })();
 
   /* ---------------------------------------------------
-     5. Lead form
+     5. Lead form (Connected to Google Sheets)
      --------------------------------------------------- */
   (function leadForm() {
     const form = document.getElementById('leadForm');
     const note = document.getElementById('formNote');
     if (!form || !note) return;
+
+    // Replace this with the URL you copied from Google Apps Script
+    const scriptURL = 'https://script.google.com/macros/s/AKfycby-IFfTa6p86mfAwVaKXjk2QncVZNRrs_CW-15halApPASrxF4xOGZ5EcBx_pVcGqHhig/exec';
 
     form.addEventListener('submit', (e) => {
       e.preventDefault();
@@ -211,10 +214,25 @@ document.addEventListener('DOMContentLoaded', () => {
         return;
       }
 
-      // No backend wired up — this simulates a submit confirmation.
-      note.style.color = 'var(--cyan)';
-      note.textContent = `Thanks, ${name.split(' ')[0]}! We'll message you on WhatsApp shortly.`;
-      form.reset();
+      // Show a loading state
+      note.style.color = 'var(--text-muted)';
+      note.textContent = 'Sending details...';
+
+      // Package the form data
+      const formData = new FormData(form);
+
+      // Send the data to Google Sheets
+      fetch(scriptURL, { method: 'POST', body: formData })
+        .then(response => {
+          note.style.color = 'var(--cyan)';
+          note.textContent = `Thanks, ${name.split(' ')[0]}! We'll message you on WhatsApp shortly.`;
+          form.reset();
+        })
+        .catch(error => {
+          console.error('Error!', error.message);
+          note.style.color = '#ff8a8a';
+          note.textContent = 'Something went wrong. Please try again.';
+        });
     });
   })();
 
