@@ -1,0 +1,561 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Zenith Academy | Coaching Institute for JEE, NEET &amp; Foundation</title>
+<meta name="description" content="Zenith Academy - Premier coaching institute for JEE, NEET and Foundation courses. Expert faculty, proven results, personalized mentorship.">
+
+<!-- Google Fonts: Sora (display) + Inter (body) -->
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Sora:wght@400;600;700;800&family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+
+<link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+<!-- =========================================================
+     1. STICKY NAVBAR
+========================================================= -->
+<header class="navbar" id="navbar">
+  <div class="container navbar__inner">
+    <a href="#hero" class="navbar__logo">
+      <span class="navbar__logo-mark">Z</span>
+      <span class="navbar__logo-text">Zenith <em>Academy</em></span>
+    </a>
+
+    <nav class="navbar__nav" id="primaryNav">
+      <a href="#courses" class="navbar__link">Courses</a>
+      <a href="#faculty" class="navbar__link">Faculty</a>
+      <a href="#results" class="navbar__link">Results</a>
+      <a href="#testimonials" class="navbar__link">Testimonials</a>
+      <a href="#faq" class="navbar__link">FAQs</a>
+      <a href="#contact" class="navbar__link">Contact</a>
+    </nav>
+
+    <div class="navbar__actions">
+      <a href="#contact" class="btn btn--primary btn--sm">Contact Us</a>
+      <button class="navbar__toggle" id="navToggle" aria-label="Toggle menu" aria-expanded="false">
+        <span></span><span></span><span></span>
+      </button>
+    </div>
+  </div>
+</header>
+
+<!-- =========================================================
+     2. HERO SECTION
+========================================================= -->
+<section class="hero" id="hero">
+  <div class="hero__bg" aria-hidden="true">
+    <div class="hero__blob hero__blob--1"></div>
+    <div class="hero__blob hero__blob--2"></div>
+    <svg class="hero__grid" width="100%" height="100%"><defs><pattern id="grid" width="40" height="40" patternUnits="userSpaceOnUse"><path d="M 40 0 L 0 0 0 40" fill="none" stroke="rgba(255,255,255,0.05)" stroke-width="1"/></pattern></defs><rect width="100%" height="100%" fill="url(#grid)"/></svg>
+  </div>
+
+  <div class="container hero__inner">
+    <div class="hero__content reveal">
+      <span class="hero__eyebrow">Admissions Open — Batch 2026</span>
+      <h1 class="hero__headline">Rank up. <span class="text-gold">Not just study up.</span></h1>
+      <p class="hero__subheadline">
+        Zenith Academy builds toppers for JEE, NEET &amp; School Foundation through
+        small-batch mentorship, daily doubt-solving and data-backed test analysis —
+        not one-size-fits-all lectures.
+      </p>
+      <div class="hero__cta-group">
+        <a href="#courses" class="btn btn--primary btn--lg">Explore Courses</a>
+        <a href="#contact" class="btn btn--outline btn--lg">Book a Free Demo</a>
+      </div>
+      <div class="hero__trust">
+        <div class="hero__avatars">
+          <span class="hero__avatar">SR</span>
+          <span class="hero__avatar">AK</span>
+          <span class="hero__avatar">PV</span>
+          <span class="hero__avatar">+5k</span>
+        </div>
+        <p>Trusted by 5,000+ students across the region</p>
+      </div>
+    </div>
+
+    <div class="hero__graphic reveal">
+      <div class="hero__card hero__card--main">
+        <div class="hero__card-row"><span>Rahul S.</span><span class="badge badge--gold">AIR 142</span></div>
+        <div class="hero__card-row"><span>Physics Mock #12</span><span class="pct">98.4%ile</span></div>
+        <div class="hero__progress"><div class="hero__progress-bar" style="width:92%"></div></div>
+        <div class="hero__card-row"><span>Chemistry Mock #12</span><span class="pct">95.1%ile</span></div>
+        <div class="hero__progress"><div class="hero__progress-bar" style="width:85%"></div></div>
+      </div>
+      <div class="hero__card hero__card--float">
+        📚 <strong>Next Live Class</strong><br>Organic Chem — 6:00 PM
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- =========================================================
+     3. QUICK STATS BAR
+========================================================= -->
+<section class="stats-bar">
+  <div class="container stats-bar__grid">
+    <div class="stats-bar__item reveal">
+      <span class="stats-bar__num" data-count="5000">0</span><span class="stats-bar__suffix">+</span>
+      <p>Students Mentored</p>
+    </div>
+    <div class="stats-bar__item reveal">
+      <span class="stats-bar__num" data-count="52">0</span><span class="stats-bar__suffix">+</span>
+      <p>Expert Faculty</p>
+    </div>
+    <div class="stats-bar__item reveal">
+      <span class="stats-bar__num" data-count="340">0</span><span class="stats-bar__suffix">+</span>
+      <p>Top-1000 Ranks</p>
+    </div>
+    <div class="stats-bar__item reveal">
+      <span class="stats-bar__num" data-count="15">0</span><span class="stats-bar__suffix">yr</span>
+      <p>Legacy of Excellence</p>
+    </div>
+  </div>
+</section>
+
+<!-- =========================================================
+     4. LEAD MAGNET SECTION
+========================================================= -->
+<section class="lead-magnet">
+  <div class="container lead-magnet__inner reveal">
+    <div class="lead-magnet__copy">
+      <span class="hero__eyebrow hero__eyebrow--dark">Free Download</span>
+      <h2>Get the 2026 Syllabus Breakdown PDF</h2>
+      <p>Chapter-wise weightage, ideal study sequence and previous-year trend analysis for JEE &amp; NEET — planned by our senior faculty. Delivered instantly to your inbox.</p>
+      <ul class="lead-magnet__points">
+        <li>✔ Chapter-wise weightage for Physics, Chemistry, Maths/Bio</li>
+        <li>✔ Month-by-month preparation calendar</li>
+        <li>✔ 5-year previous paper trend analysis</li>
+      </ul>
+    </div>
+
+    <form class="lead-magnet__form card" id="leadMagnetForm" novalidate>
+      <h3>Download Now — It's Free</h3>
+      <div class="form-group">
+        <label for="lmName">Full Name</label>
+        <input type="text" id="lmName" name="name" placeholder="Your name" required>
+      </div>
+      <div class="form-group">
+        <label for="lmEmail">Email Address</label>
+        <input type="email" id="lmEmail" name="email" placeholder="you@example.com" required>
+      </div>
+      <div class="form-group">
+        <label for="lmPhone">Phone Number</label>
+        <input type="tel" id="lmPhone" name="phone" placeholder="10-digit mobile number" pattern="[0-9]{10}" required>
+      </div>
+      <button type="submit" class="btn btn--primary btn--full">Send Me the PDF</button>
+      <p class="form-note" id="lmFormNote" role="status" aria-live="polite"></p>
+    </form>
+  </div>
+</section>
+
+<!-- =========================================================
+     5. COURSES & BATCHES
+========================================================= -->
+<section class="section" id="courses">
+  <div class="container">
+    <div class="section__header reveal">
+      <span class="eyebrow">Programs</span>
+      <h2>Courses &amp; Batches</h2>
+      <p>Choose a track built around your target exam and current level.</p>
+    </div>
+
+    <div class="grid grid--3">
+
+      <article class="card course-card reveal">
+        <span class="course-card__tag">Most Popular</span>
+        <h3>JEE Main + Advanced</h3>
+        <p class="course-card__audience">For Class 11–12 &amp; Droppers targeting IITs/NITs</p>
+        <ul class="course-card__meta">
+          <li><strong>Batch:</strong> Mon–Sat, 4:00 PM – 7:00 PM</li>
+          <li><strong>Mode:</strong> Classroom + Recorded</li>
+          <li><strong>Duration:</strong> 2 Years / 1 Year (Dropper)</li>
+        </ul>
+        <div class="course-card__footer">
+          <span class="price">₹85,000<span>/yr</span></span>
+          <button class="btn btn--outline btn--sm js-syllabus-btn" data-course="JEE Main + Advanced">Syllabus</button>
+        </div>
+      </article>
+
+      <article class="card course-card reveal">
+        <span class="course-card__tag course-card__tag--gold">High Demand</span>
+        <h3>NEET (Medical)</h3>
+        <p class="course-card__audience">For Class 11–12 &amp; Droppers targeting AIIMS/Govt. Medical</p>
+        <ul class="course-card__meta">
+          <li><strong>Batch:</strong> Mon–Sat, 8:00 AM – 11:00 AM</li>
+          <li><strong>Mode:</strong> Classroom + Recorded</li>
+          <li><strong>Duration:</strong> 2 Years / 1 Year (Dropper)</li>
+        </ul>
+        <div class="course-card__footer">
+          <span class="price">₹80,000<span>/yr</span></span>
+          <button class="btn btn--outline btn--sm js-syllabus-btn" data-course="NEET (Medical)">Syllabus</button>
+        </div>
+      </article>
+
+      <article class="card course-card reveal">
+        <span class="course-card__tag course-card__tag--green">Early Start</span>
+        <h3>Foundation (9th &amp; 10th)</h3>
+        <p class="course-card__audience">Builds fundamentals for future JEE/NEET aspirants</p>
+        <ul class="course-card__meta">
+          <li><strong>Batch:</strong> Tue/Thu/Sat, 5:00 PM – 7:00 PM</li>
+          <li><strong>Mode:</strong> Classroom</li>
+          <li><strong>Duration:</strong> 1 Year (Renewable)</li>
+        </ul>
+        <div class="course-card__footer">
+          <span class="price">₹45,000<span>/yr</span></span>
+          <button class="btn btn--outline btn--sm js-syllabus-btn" data-course="Foundation (9th & 10th)">Syllabus</button>
+        </div>
+      </article>
+
+    </div>
+  </div>
+</section>
+
+<!-- =========================================================
+     6. EXPERT FACULTY
+========================================================= -->
+<section class="section section--tinted" id="faculty">
+  <div class="container">
+    <div class="section__header reveal">
+      <span class="eyebrow">Mentors</span>
+      <h2>Our Expert Faculty</h2>
+      <p>Learn from IITians and doctors who've cracked the exams themselves.</p>
+    </div>
+
+    <div class="grid grid--4">
+      <div class="card faculty-card reveal">
+        <div class="faculty-card__photo" aria-hidden="true">👨‍🏫</div>
+        <h3>Dr. Anand Mehta</h3>
+        <p class="faculty-card__subject">Physics</p>
+        <p class="faculty-card__exp">18 yrs experience • IIT Bombay</p>
+      </div>
+      <div class="card faculty-card reveal">
+        <div class="faculty-card__photo" aria-hidden="true">👩‍🏫</div>
+        <h3>Dr. Sunita Rao</h3>
+        <p class="faculty-card__subject">Chemistry</p>
+        <p class="faculty-card__exp">14 yrs experience • BITS Pilani</p>
+      </div>
+      <div class="card faculty-card reveal">
+        <div class="faculty-card__photo" aria-hidden="true">👨‍🏫</div>
+        <h3>Vikram Nair</h3>
+        <p class="faculty-card__subject">Mathematics</p>
+        <p class="faculty-card__exp">12 yrs experience • IIT Delhi</p>
+      </div>
+      <div class="card faculty-card reveal">
+        <div class="faculty-card__photo" aria-hidden="true">👩‍⚕️</div>
+        <h3>Dr. Kavita Iyer</h3>
+        <p class="faculty-card__subject">Biology</p>
+        <p class="faculty-card__exp">16 yrs experience • AIIMS Delhi</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- =========================================================
+     7. HALL OF FAME
+========================================================= -->
+<section class="section" id="results">
+  <div class="container">
+    <div class="section__header reveal">
+      <span class="eyebrow">Proof, Not Promises</span>
+      <h2>Hall of Fame</h2>
+      <p>A few of the ranks our students brought home this year.</p>
+    </div>
+
+    <div class="grid grid--4">
+      <div class="card rank-card reveal">
+        <div class="rank-card__photo">🏅</div>
+        <span class="badge badge--gold">AIR 47</span>
+        <h3>Ishita Sharma</h3>
+        <p>JEE Advanced 2026</p>
+      </div>
+      <div class="card rank-card reveal">
+        <div class="rank-card__photo">🏅</div>
+        <span class="badge badge--gold">AIR 112</span>
+        <h3>Rohan Gupta</h3>
+        <p>NEET 2026</p>
+      </div>
+      <div class="card rank-card reveal">
+        <div class="rank-card__photo">🏅</div>
+        <span class="badge badge--gold">AIR 289</span>
+        <h3>Ananya Singh</h3>
+        <p>JEE Main 2026</p>
+      </div>
+      <div class="card rank-card reveal">
+        <div class="rank-card__photo">🏅</div>
+        <span class="badge badge--gold">AIR 356</span>
+        <h3>Aarav Patel</h3>
+        <p>NEET 2026</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- =========================================================
+     8. TESTIMONIALS CAROUSEL
+========================================================= -->
+<section class="section section--tinted" id="testimonials">
+  <div class="container">
+    <div class="section__header reveal">
+      <span class="eyebrow">Alumni Speak</span>
+      <h2>Student Testimonials</h2>
+    </div>
+
+    <div class="carousel reveal" id="testimonialCarousel">
+      <div class="carousel__track" id="carouselTrack">
+
+        <div class="carousel__slide">
+          <div class="card testimonial-card">
+            <p class="testimonial-card__quote">"Zenith's doubt-solving sessions were a game changer. The faculty never let a single concept stay unclear."</p>
+            <div class="testimonial-card__person">
+              <div class="testimonial-card__avatar">RS</div>
+              <div><strong>Rahul Sen</strong><span>AIR 142, JEE Advanced</span></div>
+            </div>
+          </div>
+        </div>
+
+        <div class="carousel__slide">
+          <div class="card testimonial-card">
+            <p class="testimonial-card__quote">"The weekly test analysis showed me exactly where I was losing marks. That data-driven approach got me into AIIMS."</p>
+            <div class="testimonial-card__person">
+              <div class="testimonial-card__avatar">PV</div>
+              <div><strong>Priya Verma</strong><span>AIR 88, NEET</span></div>
+            </div>
+          </div>
+        </div>
+
+        <div class="carousel__slide">
+          <div class="card testimonial-card">
+            <p class="testimonial-card__quote">"Small batch sizes meant every teacher actually knew my name and my weak topics. That personal touch made all the difference."</p>
+            <div class="testimonial-card__person">
+              <div class="testimonial-card__avatar">AK</div>
+              <div><strong>Aditya Kumar</strong><span>AIR 205, JEE Main</span></div>
+            </div>
+          </div>
+        </div>
+
+        <div class="carousel__slide">
+          <div class="card testimonial-card">
+            <p class="testimonial-card__quote">"I joined the Foundation batch in Class 9 and by the time I hit Class 12, JEE prep felt natural instead of overwhelming."</p>
+            <div class="testimonial-card__person">
+              <div class="testimonial-card__avatar">SN</div>
+              <div><strong>Sneha Nair</strong><span>AIR 356, NEET</span></div>
+            </div>
+          </div>
+        </div>
+
+      </div>
+
+      <button class="carousel__btn carousel__btn--prev" id="carouselPrev" aria-label="Previous testimonial">‹</button>
+      <button class="carousel__btn carousel__btn--next" id="carouselNext" aria-label="Next testimonial">›</button>
+
+      <div class="carousel__dots" id="carouselDots"></div>
+    </div>
+  </div>
+</section>
+
+<!-- =========================================================
+     9. FAQ ACCORDION
+========================================================= -->
+<section class="section" id="faq">
+  <div class="container container--narrow">
+    <div class="section__header reveal">
+      <span class="eyebrow">Questions</span>
+      <h2>Frequently Asked Questions</h2>
+    </div>
+
+    <div class="accordion reveal" id="accordion">
+
+      <div class="accordion__item">
+        <button class="accordion__trigger" aria-expanded="false">
+          Can I attend a free demo class before enrolling?
+          <span class="accordion__icon">+</span>
+        </button>
+        <div class="accordion__panel">
+          <p>Yes! We offer a free demo class for every course. You can book a slot via the "Book a Free Demo" button on this page or by calling our admissions desk directly.</p>
+        </div>
+      </div>
+
+      <div class="accordion__item">
+        <button class="accordion__trigger" aria-expanded="false">
+          What is the fee structure and are installments available?
+          <span class="accordion__icon">+</span>
+        </button>
+        <div class="accordion__panel">
+          <p>Fees vary by course (see the Courses section above). We offer flexible installment plans across 3–6 months, and sibling/merit-based scholarships are available on request.</p>
+        </div>
+      </div>
+
+      <div class="accordion__item">
+        <button class="accordion__trigger" aria-expanded="false">
+          What is the typical batch size?
+          <span class="accordion__icon">+</span>
+        </button>
+        <div class="accordion__panel">
+          <p>We cap every batch at 30 students to ensure faculty can give personal attention and track individual progress through weekly tests.</p>
+        </div>
+      </div>
+
+      <div class="accordion__item">
+        <button class="accordion__trigger" aria-expanded="false">
+          Do you provide study material and test series?
+          <span class="accordion__icon">+</span>
+        </button>
+        <div class="accordion__panel">
+          <p>Yes, every enrolled student receives printed modules, chapter-wise practice sheets, and access to our online test series with detailed performance analytics.</p>
+        </div>
+      </div>
+
+      <div class="accordion__item">
+        <button class="accordion__trigger" aria-expanded="false">
+          Is online / hybrid learning available?
+          <span class="accordion__icon">+</span>
+        </button>
+        <div class="accordion__panel">
+          <p>All classroom sessions are recorded and made available on our student portal, so you can revise at your own pace alongside live classes.</p>
+        </div>
+      </div>
+
+    </div>
+  </div>
+</section>
+
+<!-- =========================================================
+     10. CONTACT & LOCATION
+========================================================= -->
+<section class="section section--tinted" id="contact">
+  <div class="container">
+    <div class="section__header reveal">
+      <span class="eyebrow">Get In Touch</span>
+      <h2>Contact &amp; Location</h2>
+      <p>Have a question or ready to enroll? Reach out — we respond within a few hours.</p>
+    </div>
+
+    <div class="contact-grid reveal">
+
+      <div class="contact-info">
+        <div class="card contact-info__card">
+          <h3>📍 Visit Us</h3>
+          <p>Zenith Academy, 3rd Floor, Vidya Complex,<br>MG Road, Sector 14,<br>Hāpur, Uttar Pradesh – 245101</p>
+        </div>
+        <div class="card contact-info__card">
+          <h3>📞 Call Us</h3>
+          <p><a href="tel:+911234567890">+91 12345 67890</a><br><a href="tel:+919876543210">+91 98765 43210</a></p>
+        </div>
+        <div class="card contact-info__card">
+          <h3>✉️ Email Us</h3>
+          <p><a href="mailto:admissions@zenithacademy.example">admissions@zenithacademy.example</a></p>
+        </div>
+        <div class="map-embed">
+          <!-- Replace src below with your actual Google Maps embed link -->
+          <iframe
+            title="Zenith Academy Location"
+            src="https://www.google.com/maps?q=Hapur,Uttar+Pradesh&output=embed"
+            width="100%" height="100%" style="border:0;" allowfullscreen="" loading="lazy"
+            referrerpolicy="no-referrer-when-downgrade">
+          </iframe>
+        </div>
+      </div>
+
+      <form class="card contact-form" id="contactForm" novalidate>
+        <h3>Send Us a Message</h3>
+        <div class="form-group">
+          <label for="cName">Full Name</label>
+          <input type="text" id="cName" name="name" placeholder="Your name" required>
+        </div>
+        <div class="form-group">
+          <label for="cEmail">Email Address</label>
+          <input type="email" id="cEmail" name="email" placeholder="you@example.com" required>
+        </div>
+        <div class="form-group">
+          <label for="cPhone">Phone Number</label>
+          <input type="tel" id="cPhone" name="phone" placeholder="10-digit mobile number" pattern="[0-9]{10}" required>
+        </div>
+        <div class="form-group">
+          <label for="cCourse">Course Interested In</label>
+          <select id="cCourse" name="course" required>
+            <option value="" disabled selected>Select a course</option>
+            <option>JEE Main + Advanced</option>
+            <option>NEET (Medical)</option>
+            <option>Foundation (9th & 10th)</option>
+          </select>
+        </div>
+        <div class="form-group">
+          <label for="cMessage">Message</label>
+          <textarea id="cMessage" name="message" rows="4" placeholder="Tell us what you're looking for..."></textarea>
+        </div>
+        <button type="submit" class="btn btn--primary btn--full">Send Message</button>
+        <p class="form-note" id="contactFormNote" role="status" aria-live="polite"></p>
+      </form>
+
+    </div>
+  </div>
+</section>
+
+<!-- =========================================================
+     11. FLOATING WHATSAPP BUTTON
+========================================================= -->
+<a href="https://wa.me/911234567890?text=Hi%2C%20I%27d%20like%20to%20know%20more%20about%20Zenith%20Academy%27s%20courses."
+   class="whatsapp-fab" target="_blank" rel="noopener" aria-label="Chat with us on WhatsApp">
+  <svg viewBox="0 0 32 32" width="28" height="28" fill="currentColor" aria-hidden="true">
+    <path d="M16.02 3C9.4 3 4 8.4 4 15.02c0 2.36.68 4.55 1.85 6.4L4 29l7.76-1.8a11.9 11.9 0 0 0 4.26.78h.01c6.62 0 12.02-5.4 12.02-12.02C28.05 8.4 22.65 3 16.02 3zm7.03 17.05c-.3.83-1.72 1.59-2.37 1.66-.6.06-1.36.1-2.19-.14-.5-.15-1.15-.36-1.98-.7-3.49-1.5-5.76-5.03-5.94-5.27-.17-.24-1.42-1.9-1.42-3.62 0-1.72.9-2.56 1.22-2.91.32-.35.7-.44.93-.44.23 0 .47 0 .67.01.22.01.5-.08.78.6.3.7 1 2.42 1.09 2.6.09.17.15.38.03.62-.12.24-.18.38-.35.58-.18.2-.37.46-.53.62-.18.17-.36.36-.16.7.2.35.9 1.48 1.93 2.4 1.33 1.18 2.44 1.55 2.79 1.72.35.17.55.15.76-.09.2-.24.87-1.02 1.1-1.37.23-.35.46-.29.77-.17.32.12 2.02.95 2.37 1.12.35.17.58.26.66.4.1.16.1.9-.2 1.73z"/>
+  </svg>
+</a>
+
+<!-- =========================================================
+     12. FOOTER
+========================================================= -->
+<footer class="footer">
+  <div class="container footer__grid">
+
+    <div class="footer__brand">
+      <a href="#hero" class="navbar__logo navbar__logo--footer">
+        <span class="navbar__logo-mark">Z</span>
+        <span class="navbar__logo-text">Zenith <em>Academy</em></span>
+      </a>
+      <p>Building toppers through mentorship, not just lectures. Admissions open for 2026 batches.</p>
+      <div class="footer__socials">
+        <a href="#" aria-label="Facebook">f</a>
+        <a href="#" aria-label="Instagram">ig</a>
+        <a href="#" aria-label="YouTube">yt</a>
+        <a href="#" aria-label="Twitter / X">x</a>
+      </div>
+    </div>
+
+    <div class="footer__links">
+      <h4>Quick Links</h4>
+      <a href="#courses">Courses</a>
+      <a href="#faculty">Faculty</a>
+      <a href="#results">Results</a>
+      <a href="#testimonials">Testimonials</a>
+      <a href="#faq">FAQs</a>
+    </div>
+
+    <div class="footer__links">
+      <h4>Courses</h4>
+      <a href="#courses">JEE Main + Advanced</a>
+      <a href="#courses">NEET (Medical)</a>
+      <a href="#courses">Foundation (9th &amp; 10th)</a>
+    </div>
+
+    <div class="footer__links">
+      <h4>Contact</h4>
+      <a href="tel:+911234567890">+91 12345 67890</a>
+      <a href="mailto:admissions@zenithacademy.example">admissions@zenithacademy.example</a>
+      <a href="#contact">MG Road, Hāpur, UP</a>
+    </div>
+
+  </div>
+
+  <div class="footer__bottom">
+    <p>&copy; <span id="year"></span> Zenith Academy. All rights reserved.</p>
+    <p>Made with care for students who dream big.</p>
+  </div>
+</footer>
+
+<script src="script.js"></script>
+</body>
+</html>
