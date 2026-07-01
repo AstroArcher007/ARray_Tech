@@ -158,13 +158,13 @@ section { position: relative; }
 
 .btn--block { width: 100%; padding: 16px 28px; }
 
-.btn-samples{
+.btn--samples{
   margin-top: 3%;
   align-self: center;
   color: white;
   background-color: #23252b;
 }
-.btn-samples:hover{
+.btn--samples:hover{
   color: white;
   background-color: #0a0b0d;
   border: 0.1em violet solid;
