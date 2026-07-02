@@ -16,8 +16,9 @@ document.addEventListener('DOMContentLoaded', () => {
     // Replaced the coding theme with clean business values
     const lines = [
       'High-speed sites for local businesses.',
-      '100% cost recovery guaranteed.',
-      'Premium online presence for ₹5,000 flat.'
+      'Lowest price, guaranteed.',
+      'QR code shipped to your door, free.',
+      '100% cost recovery guaranteed.'
     ];
 
     let lineIndex = 0;
