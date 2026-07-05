@@ -1,0 +1,425 @@
+/* ==========================================================================
+   demo.css — Live demo shell
+   Wraps the real client + admin apps in phone mockups: stacked side by side
+   on desktop, full-screen and swipeable on mobile. Loaded after style.css,
+   so single-class overrides below (e.g. .admin-body) win the cascade.
+   ========================================================================== */
+
+.demo-page {
+  min-height: 100vh;
+  background:
+    radial-gradient(ellipse 900px 500px at 20% -10%, rgba(184, 134, 62, 0.16), transparent 60%),
+    radial-gradient(ellipse 900px 600px at 100% 10%, rgba(74, 93, 69, 0.22), transparent 60%),
+    var(--color-ink);
+  color: var(--color-ivory);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  padding: var(--space-6) var(--space-4) var(--space-5);
+}
+
+/* --- Hero --- */
+
+.demo-hero {
+  text-align: center;
+  max-width: 620px;
+  margin-bottom: var(--space-6);
+}
+
+.demo-hero__eyebrow {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  font-family: var(--font-mono);
+  font-size: 0.72rem;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  color: var(--color-gold-light);
+}
+
+.demo-hero__eyebrow::before {
+  content: "";
+  width: 6px;
+  height: 6px;
+  border-radius: 50%;
+  background: var(--color-gold-light);
+  box-shadow: 0 0 0 3px rgba(217, 172, 102, 0.2);
+}
+
+.demo-hero__title {
+  font-family: var(--font-display);
+  font-weight: 600;
+  font-size: clamp(1.9rem, 4.4vw, 2.7rem);
+  letter-spacing: -0.01em;
+  margin-top: var(--space-3);
+  color: var(--color-ivory);
+}
+
+.demo-hero__subtitle {
+  margin-top: var(--space-3);
+  color: rgba(247, 243, 236, 0.68);
+  font-size: 0.98rem;
+  line-height: 1.6;
+}
+
+.demo-hero__note {
+  margin-top: var(--space-3);
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  font-size: 0.78rem;
+  color: rgba(247, 243, 236, 0.5);
+  font-family: var(--font-mono);
+}
+
+.demo-hero__note svg {
+  width: 14px;
+  height: 14px;
+  flex-shrink: 0;
+}
+
+.demo-hero__swipe-hint {
+  display: none;
+}
+
+/* --- Phone rack --- */
+
+.demo-phones-wrap {
+  position: relative;
+  width: 100%;
+  display: flex;
+  justify-content: center;
+}
+
+.demo-phones {
+  display: flex;
+  gap: var(--space-6);
+  align-items: flex-start;
+  justify-content: center;
+  flex-wrap: wrap;
+  width: 100%;
+}
+
+/* Prev/next arrow buttons — only shown on mobile, where phones become a
+   swipeable single-column carousel instead of a side-by-side rack. */
+.demo-nav-arrow {
+  display: none;
+  position: absolute;
+  top: 50%;
+  transform: translateY(-50%);
+  z-index: 30;
+  width: 40px;
+  height: 40px;
+  align-items: center;
+  justify-content: center;
+  border-radius: 50%;
+  border: 1px solid rgba(247, 243, 236, 0.16);
+  background: rgba(11, 13, 12, 0.55);
+  backdrop-filter: blur(6px);
+  color: var(--color-ivory);
+  cursor: pointer;
+  transition: opacity 0.2s, transform 0.15s;
+}
+
+.demo-nav-arrow svg {
+  width: 18px;
+  height: 18px;
+}
+
+.demo-nav-arrow:active {
+  transform: translateY(-50%) scale(0.92);
+}
+
+.demo-nav-arrow[disabled] {
+  opacity: 0.3;
+  pointer-events: none;
+}
+
+.demo-nav-arrow--prev {
+  left: 3vw;
+}
+
+.demo-nav-arrow--next {
+  right: 3vw;
+}
+
+.phone-slot {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: var(--space-3);
+}
+
+.phone-slot__label {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  font-family: var(--font-mono);
+  font-size: 0.72rem;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  color: rgba(247, 243, 236, 0.55);
+}
+
+.phone-slot__label svg {
+  width: 14px;
+  height: 14px;
+  color: var(--color-gold-light);
+}
+
+/* --- Phone frame (device bezel) --- */
+
+.phone-frame {
+  --phone-w: 336px;
+  --phone-h: 700px;
+  width: var(--phone-w);
+  height: var(--phone-h);
+  background: #0b0d0c;
+  border-radius: 46px;
+  padding: 12px;
+  box-shadow:
+    0 30px 60px -20px rgba(0, 0, 0, 0.55),
+    0 0 0 1px rgba(255, 255, 255, 0.04) inset;
+  display: flex;
+  flex-direction: column;
+  overflow: hidden;
+}
+
+.phone-frame__statusbar {
+  position: relative;
+  flex: 0 0 30px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 0 22px;
+  background: var(--color-ivory);
+  font-family: var(--font-mono);
+  font-size: 0.68rem;
+  color: var(--color-ink);
+  border-radius: 30px 30px 0 0;
+}
+
+.phone-frame__screen.admin-body + .phone-frame__homebar,
+.phone-slot--admin .phone-frame__statusbar {
+  background: var(--color-ink);
+  color: var(--color-ivory);
+}
+
+.phone-frame__notch {
+  position: absolute;
+  top: 6px;
+  left: 50%;
+  transform: translateX(-50%);
+  width: 84px;
+  height: 18px;
+  background: #0b0d0c;
+  border-radius: 12px;
+}
+
+.phone-frame__time {
+  font-weight: 700;
+  letter-spacing: 0.02em;
+}
+
+.phone-frame__icons {
+  display: flex;
+  align-items: center;
+  gap: 5px;
+}
+
+.phone-frame__icons svg {
+  width: 15px;
+  height: 15px;
+}
+
+.phone-frame__screen {
+  position: relative;
+  flex: 1;
+  overflow-y: auto;
+  overflow-x: hidden;
+  -webkit-overflow-scrolling: touch;
+  scrollbar-width: thin;
+}
+
+.phone-frame__screen.client-body {
+  font-family: var(--font-body);
+  background: var(--color-ivory);
+  color: var(--color-ink);
+  line-height: 1.5;
+  min-height: 100%;
+  -webkit-font-smoothing: antialiased;
+}
+
+.phone-frame__screen.admin-body {
+  min-height: 100%;
+}
+
+.phone-frame__homebar {
+  flex: 0 0 22px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: var(--color-ivory);
+}
+
+.phone-slot--admin .phone-frame__homebar {
+  background: var(--color-ink);
+}
+
+.phone-frame__homebar::after {
+  content: "";
+  width: 110px;
+  height: 4px;
+  border-radius: 4px;
+  background: currentColor;
+  opacity: 0.35;
+  color: var(--color-ink);
+}
+
+.phone-slot--admin .phone-frame__homebar::after {
+  color: var(--color-ivory);
+}
+
+/* --- Mobile pager dots (hidden on desktop) --- */
+
+.demo-pager {
+  display: none;
+}
+
+/* ==========================================================================
+   Mobile: the real device IS the frame — go full screen, swipe to switch
+   ========================================================================== */
+
+@media (max-width: 780px) {
+  .demo-page {
+    padding: var(--space-5) 0 var(--space-6);
+    display: flex;
+    flex-direction: column;
+    min-height: 100dvh;
+  }
+
+  /* Keep a short description visible instead of hiding the hero entirely —
+     just trim it down so it doesn't eat the whole screen. */
+  .demo-hero {
+    display: block;
+    padding: 0 var(--space-5);
+    margin-bottom: var(--space-4);
+  }
+
+  .demo-hero__note {
+    display: none;
+  }
+
+  .demo-hero__title {
+    font-size: 1.5rem;
+  }
+
+  .demo-hero__subtitle {
+    font-size: 0.86rem;
+  }
+
+  .demo-hero__swipe-hint {
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+    margin-top: var(--space-3);
+    font-size: 0.72rem;
+    letter-spacing: 0.02em;
+    color: rgba(247, 243, 236, 0.55);
+    font-family: var(--font-mono);
+  }
+
+  .demo-hero__swipe-hint svg {
+    width: 13px;
+    height: 13px;
+    flex-shrink: 0;
+  }
+
+  .demo-phones-wrap {
+    padding: 0 var(--space-4);
+    box-sizing: border-box;
+  }
+
+  .demo-phones {
+    flex-wrap: nowrap;
+    justify-content: flex-start;
+    gap: var(--space-4);
+    width: 100%;
+    overflow-x: auto;
+    overflow-y: hidden;
+    scroll-snap-type: x mandatory;
+    -webkit-overflow-scrolling: touch;
+    padding: 0 6vw var(--space-5);
+    box-sizing: border-box;
+  }
+
+  .phone-slot {
+    flex: 0 0 88vw;
+    width: 88vw;
+    scroll-snap-align: center;
+    scroll-snap-stop: always;
+    gap: var(--space-2);
+  }
+
+  .phone-slot__label {
+    display: inline-flex;
+  }
+
+  /* Smaller, still-framed device — not full-screen — so there's visible
+     margin around it and the whole screen fits comfortably. */
+  .phone-frame {
+    --phone-w: 100%;
+    --phone-h: min(66vh, 560px);
+    width: 100%;
+    height: var(--phone-h);
+    border-radius: 34px;
+    padding: 8px;
+    box-shadow:
+      0 24px 50px -18px rgba(0, 0, 0, 0.55),
+      0 0 0 1px rgba(255, 255, 255, 0.05) inset;
+  }
+
+  .phone-frame__notch {
+    width: 70px;
+    height: 14px;
+  }
+
+  .phone-frame__statusbar {
+    border-radius: 26px 26px 0 0;
+    padding: 0 18px;
+    flex-basis: max(26px, env(safe-area-inset-top));
+  }
+
+  .phone-frame__homebar {
+    flex-basis: max(18px, env(safe-area-inset-bottom));
+  }
+
+  .demo-nav-arrow {
+    display: flex;
+  }
+
+  .demo-pager {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    position: relative;
+    margin-top: var(--space-2);
+    background: rgba(11, 13, 12, 0.55);
+    backdrop-filter: blur(6px);
+    padding: 8px 12px;
+    border-radius: 999px;
+  }
+
+  .demo-pager__dot {
+    width: 7px;
+    height: 7px;
+    border-radius: 50%;
+    background: rgba(247, 243, 236, 0.4);
+    transition: background 0.2s, transform 0.2s;
+  }
+
+  .demo-pager__dot.is-active {
+    background: var(--color-gold-light);
+    transform: scale(1.3);
+  }
+}
