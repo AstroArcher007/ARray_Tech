@@ -1,0 +1,166 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Amaranth — Menu Dashboard</title>
+
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link
+    href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,500;9..144,600;9..144,700&family=Inter:wght@400;500;600&family=Space+Mono:wght@400;700&display=swap"
+    rel="stylesheet"
+  />
+
+  <link rel="stylesheet" href="style.css" />
+</head>
+<body class="admin-body">
+
+  <div class="admin-shell fade-in">
+
+    <!-- ============================== HEADER ============================== -->
+    <header class="admin-header">
+      <div class="admin-header__brand">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round">
+          <path d="M12 2l2.6 6.6L21 11l-6.4 2.4L12 20l-2.6-6.6L3 11l6.4-2.4L12 2z"></path>
+        </svg>
+        <div>
+          <div class="admin-header__title">Menu Dashboard</div>
+          <div class="admin-header__sub">Amaranth · Staff Only</div>
+        </div>
+      </div>
+      <div class="admin-status">
+        <span class="admin-status__dot" id="statusDot"></span>
+        <span id="statusText">Connecting…</span>
+      </div>
+    </header>
+
+    <div class="admin-grid">
+
+      <!-- ============================== FORM PANEL ============================== -->
+      <section class="admin-panel" aria-labelledby="formTitle">
+        <h2 class="admin-panel__title" id="formTitle">Add a dish</h2>
+        <p class="admin-panel__hint" id="formHint">Fill in the details and save to publish it to the live menu.</p>
+
+        <form id="dishForm" novalidate>
+          <input type="hidden" id="dishId" value="" />
+
+          <div class="form-field">
+            <label for="dishName">Dish name</label>
+            <input type="text" id="dishName" placeholder="e.g. Charred Octopus" required maxlength="80" />
+          </div>
+
+          <div class="form-field">
+            <label for="dishDescription">Description</label>
+            <textarea id="dishDescription" placeholder="Short, appetizing description…" maxlength="220" required></textarea>
+          </div>
+
+          <div class="form-row">
+            <div class="form-field">
+              <label for="dishPrice">Price (INR)</label>
+              <input type="number" id="dishPrice" placeholder="0" step="1" min="0" required />
+            </div>
+            <div class="form-field">
+              <label for="categorySelect">Category</label>
+              <div class="category-picker">
+                <select id="categorySelect" required>
+                  <option value="" disabled selected>Select…</option>
+                </select>
+                <button type="button" class="icon-btn" id="newCategoryToggle" title="Add a new category" aria-label="Add a new category">
+                  <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                    <line x1="12" y1="5" x2="12" y2="19"></line>
+                    <line x1="5" y1="12" x2="19" y2="12"></line>
+                  </svg>
+                </button>
+              </div>
+              <div class="new-category-row" id="newCategoryRow">
+                <input type="text" id="newCategoryInput" placeholder="New category name" maxlength="40" />
+                <button type="button" class="btn btn-ghost btn-sm" id="addCategoryBtn">Add</button>
+              </div>
+            </div>
+          </div>
+
+          <div class="form-field">
+            <label>Diet type</label>
+            <div class="diet-select" id="dietSelect">
+              <label class="diet-option" data-diet="veg">
+                <input type="radio" name="dietType" value="veg" checked />
+                <svg class="diet-marker diet-marker--veg" viewBox="0 0 16 16"><rect x="1" y="1" width="14" height="14" rx="2" fill="none" stroke="currentColor" stroke-width="1.4"></rect><circle cx="8" cy="8" r="3.4" fill="currentColor"></circle></svg>
+                Veg
+              </label>
+              <label class="diet-option" data-diet="egg">
+                <input type="radio" name="dietType" value="egg" />
+                <svg class="diet-marker diet-marker--egg" viewBox="0 0 16 16"><rect x="1" y="1" width="14" height="14" rx="2" fill="none" stroke="currentColor" stroke-width="1.4"></rect><circle cx="8" cy="8" r="3.4" fill="currentColor"></circle></svg>
+                Egg
+              </label>
+              <label class="diet-option" data-diet="non-veg">
+                <input type="radio" name="dietType" value="non-veg" />
+                <svg class="diet-marker diet-marker--nonveg" viewBox="0 0 16 16"><rect x="1" y="1" width="14" height="14" rx="2" fill="none" stroke="currentColor" stroke-width="1.4"></rect><circle cx="8" cy="8" r="3.4" fill="currentColor"></circle></svg>
+                Non-veg
+              </label>
+            </div>
+          </div>
+
+          <div class="toggle-row">
+            <span class="toggle-row__label">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                <path d="M12 2l2.6 6.6L21 11l-6.4 2.4L12 20l-2.6-6.6L3 11l6.4-2.4L12 2z"></path>
+              </svg>
+              Mark as Today's Special
+            </span>
+            <label class="switch">
+              <input type="checkbox" id="isSpecialToggle" />
+              <span class="switch__track"></span>
+            </label>
+          </div>
+
+          <div class="form-actions">
+            <button type="submit" class="btn btn-primary" id="submitBtn">Save dish</button>
+            <button type="button" class="btn btn-ghost" id="cancelEditBtn" style="display: none;">Cancel</button>
+          </div>
+        </form>
+      </section>
+
+      <!-- ============================== LIST PANEL ============================== -->
+      <section class="admin-panel" aria-labelledby="listTitle">
+        <div class="admin-list-header">
+          <h2 class="admin-panel__title" id="listTitle" style="margin-bottom: 0;">Current menu</h2>
+          <div class="admin-search">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+              <circle cx="11" cy="11" r="7"></circle>
+              <line x1="21" y1="21" x2="16.65" y2="16.65"></line>
+            </svg>
+            <input type="text" id="adminSearch" placeholder="Search dishes…" aria-label="Search dishes" />
+          </div>
+        </div>
+
+        <div class="dish-table" id="dishTable">
+          <div class="admin-empty">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">
+              <path d="M4 19.5A2.5 2.5 0 016.5 17H20"></path>
+              <path d="M6.5 2H20v20H6.5A2.5 2.5 0 014 19.5v-15A2.5 2.5 0 016.5 2z"></path>
+            </svg>
+            Loading menu…
+          </div>
+        </div>
+      </section>
+
+    </div>
+  </div>
+
+  <!-- Toast notification for save/delete feedback -->
+  <div class="toast" id="toast" role="status" aria-live="polite">
+    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+      <path d="M20 6L9 17l-5-5"></path>
+    </svg>
+    <span id="toastMessage">Saved</span>
+  </div>
+
+  <!-- Firebase SDKs (compat build) -->
+  <script src="https://www.gstatic.com/firebasejs/10.12.2/firebase-app-compat.js"></script>
+  <script src="https://www.gstatic.com/firebasejs/10.12.2/firebase-firestore-compat.js"></script>
+
+  <script src="firebase-config.js"></script>
+  <script src="admin.js"></script>
+</body>
+</html>
