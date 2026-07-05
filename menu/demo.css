@@ -342,6 +342,7 @@
 
   .demo-phones {
     flex-wrap: nowrap;
+    justify-content: flex-start;
     gap: var(--space-4);
     width: 100%;
     overflow-x: auto;
