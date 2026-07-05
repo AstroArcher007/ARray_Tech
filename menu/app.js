@@ -270,7 +270,9 @@
     navIndicator.style.width = `${activeTab.offsetWidth}px`;
     navIndicator.style.transform = `translateX(${activeTab.offsetLeft}px)`;
 
-    activeTab.scrollIntoView({ behavior: animate ? "smooth" : "auto", inline: "center", block: "nearest" });
+    if (animate) {
+      activeTab.scrollIntoView({ behavior: "smooth", inline: "center", block: "nearest" });
+    }
   }
 
   // --- Swipe / drag handling on the category track ------------------------

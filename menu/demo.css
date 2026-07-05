@@ -353,6 +353,10 @@
     box-sizing: border-box;
   }
 
+  .demo-phones.is-editing {
+    scroll-snap-type: none;
+  }
+
   .phone-slot {
     flex: 0 0 88vw;
     width: 88vw;
