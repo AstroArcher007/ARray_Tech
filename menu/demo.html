@@ -36,10 +36,22 @@
         </svg>
         Runs entirely in this browser tab &mdash; nothing is saved, and a refresh resets the sample menu.
       </p>
+      <p class="demo-hero__swipe-hint">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+          <path d="M9 18l6-6-6-6"></path>
+        </svg>
+        Swipe or use the arrows to switch between the customer menu and staff dashboard
+      </p>
     </header>
 
     <!-- ============================== PHONES ============================== -->
-    <div class="demo-phones" id="demoPhones">
+    <div class="demo-phones-wrap">
+
+      <button type="button" class="demo-nav-arrow demo-nav-arrow--prev" id="demoPrev" aria-label="Show customer menu" disabled>
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M15 18l-6-6 6-6"></path></svg>
+      </button>
+
+      <div class="demo-phones" id="demoPhones">
 
       <div class="phone-slot phone-slot--client">
         <span class="phone-slot__label">
@@ -369,6 +381,12 @@
           <div class="phone-frame__homebar"></div>
         </div>
       </div>
+
+      </div>
+
+      <button type="button" class="demo-nav-arrow demo-nav-arrow--next" id="demoNext" aria-label="Show staff dashboard">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M9 18l6-6-6-6"></path></svg>
+      </button>
 
     </div>
 
