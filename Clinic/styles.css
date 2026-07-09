@@ -1,0 +1,539 @@
+/* ============================================================================
+   styles.css — Clinic Management System
+   Design language: a calm clinical register built around the physical object
+   this app replaces — the paper queue ticket. The token number is treated as
+   a signature "ticket" element throughout (perforated edge, mono digits).
+   ============================================================================ */
+
+@import url('https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,400;9..144,600;9..144,700&family=Inter:wght@400;500;600;700&family=IBM+Plex+Mono:wght@500;600&display=swap');
+
+:root {
+  /* --- Color tokens --- */
+  --ink:        #14302B;   /* deep forest-teal: headings, primary text */
+  --ink-soft:   #3E5751;   /* secondary text */
+  --paper:      #F7F5F0;   /* warm off-white page background */
+  --card:       #FFFFFF;   /* card surfaces */
+  --sage:       #E3ECE6;   /* muted sage for subtle fills / hovers */
+  --line:       #D8DFD9;   /* hairline borders */
+  --teal:       #1F6F63;   /* primary action color */
+  --teal-dark:  #164F46;
+  --amber:      #C97D2F;   /* warnings / fees due / skipped */
+  --amber-soft: #FBEEDE;
+  --coral:      #B23A48;   /* emergency / destructive */
+  --coral-soft: #F8E6E8;
+  --ok:         #3F7D5C;   /* success / valid / completed */
+  --ok-soft:    #E4F0E9;
+
+  /* --- Type --- */
+  --font-display: 'Fraunces', Georgia, serif;
+  --font-body: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
+  --font-mono: 'IBM Plex Mono', 'SF Mono', monospace;
+
+  --radius: 10px;
+  --radius-lg: 16px;
+  --shadow-sm: 0 1px 2px rgba(20, 48, 43, 0.06), 0 1px 1px rgba(20,48,43,0.04);
+  --shadow-md: 0 4px 16px rgba(20, 48, 43, 0.08);
+}
+
+* { box-sizing: border-box; }
+
+html, body {
+  margin: 0;
+  padding: 0;
+  min-height: 100%;
+}
+
+body {
+  font-family: var(--font-body);
+  background: var(--paper);
+  color: var(--ink);
+  line-height: 1.5;
+  -webkit-font-smoothing: antialiased;
+}
+
+h1, h2, h3, h4 {
+  font-family: var(--font-display);
+  color: var(--ink);
+  margin: 0 0 0.4em 0;
+  letter-spacing: -0.01em;
+}
+
+h1 { font-size: 1.9rem; font-weight: 600; }
+h2 { font-size: 1.35rem; font-weight: 600; }
+h3 { font-size: 1.05rem; font-weight: 600; }
+
+p { margin: 0 0 0.75em 0; }
+
+a { color: var(--teal); }
+
+button, input, select, textarea { font-family: var(--font-body); font-size: 0.95rem; }
+
+:focus-visible {
+  outline: 2px solid var(--teal);
+  outline-offset: 2px;
+}
+
+.hidden { display: none !important; }
+
+/* ============================================================================
+   Layout shells
+   ============================================================================ */
+
+.screen {
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+}
+
+.app-shell {
+  display: grid;
+  grid-template-columns: 240px 1fr;
+  min-height: 100vh;
+}
+
+@media (max-width: 860px) {
+  .app-shell { grid-template-columns: 1fr; }
+  .sidebar { position: sticky; top: 0; z-index: 20; }
+}
+
+.sidebar {
+  background: var(--ink);
+  color: #EFEFE9;
+  padding: 1.5rem 1.25rem;
+  display: flex;
+  flex-direction: column;
+  gap: 1.75rem;
+}
+
+.sidebar .brand {
+  font-family: var(--font-display);
+  font-size: 1.15rem;
+  font-weight: 600;
+  color: #fff;
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+}
+
+.sidebar .brand .dot {
+  width: 9px; height: 9px; border-radius: 50%;
+  background: var(--ok);
+  box-shadow: 0 0 0 3px rgba(63,125,92,0.25);
+}
+
+.sidebar nav {
+  display: flex;
+  flex-direction: column;
+  gap: 0.25rem;
+  flex: 1;
+}
+
+.sidebar nav button {
+  all: unset;
+  cursor: pointer;
+  padding: 0.6rem 0.75rem;
+  border-radius: var(--radius);
+  font-size: 0.9rem;
+  color: #CFE0D8;
+  transition: background 0.15s ease, color 0.15s ease;
+}
+
+.sidebar nav button:hover { background: rgba(255,255,255,0.06); color: #fff; }
+.sidebar nav button.active { background: var(--teal); color: #fff; font-weight: 600; }
+
+.sidebar .user-chip {
+  border-top: 1px solid rgba(255,255,255,0.12);
+  padding-top: 1rem;
+  font-size: 0.85rem;
+  color: #B9CCC2;
+}
+
+.sidebar .user-chip strong { display: block; color: #fff; font-size: 0.95rem; }
+
+.sidebar .logout-btn {
+  all: unset;
+  cursor: pointer;
+  margin-top: 0.6rem;
+  font-size: 0.8rem;
+  color: var(--coral);
+}
+.sidebar .logout-btn:hover { text-decoration: underline; }
+
+.main {
+  padding: 1.75rem 2rem 3rem;
+  max-width: 1100px;
+  width: 100%;
+}
+
+.main-header {
+  display: flex;
+  align-items: baseline;
+  justify-content: space-between;
+  flex-wrap: wrap;
+  gap: 0.5rem;
+  margin-bottom: 1.5rem;
+}
+
+.main-header .status-pill {
+  font-family: var(--font-mono);
+  font-size: 0.75rem;
+  padding: 0.3rem 0.65rem;
+  border-radius: 100px;
+  font-weight: 600;
+  letter-spacing: 0.02em;
+}
+.status-pill.open { background: var(--ok-soft); color: var(--ok); }
+.status-pill.closed { background: var(--coral-soft); color: var(--coral); }
+
+.grid {
+  display: grid;
+  gap: 1rem;
+}
+.grid-2 { grid-template-columns: repeat(auto-fit, minmax(260px, 1fr)); }
+.grid-3 { grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); }
+
+.card {
+  background: var(--card);
+  border: 1px solid var(--line);
+  border-radius: var(--radius-lg);
+  padding: 1.25rem 1.4rem;
+  box-shadow: var(--shadow-sm);
+}
+
+.card-title-row {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 0.75rem;
+}
+
+.section { margin-bottom: 2rem; }
+
+/* ============================================================================
+   Auth screens (Login / Signup)
+   ============================================================================ */
+
+.auth-wrap {
+  flex: 1;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 2rem 1rem;
+}
+
+.auth-card {
+  width: 100%;
+  max-width: 400px;
+  background: var(--card);
+  border-radius: var(--radius-lg);
+  border: 1px solid var(--line);
+  box-shadow: var(--shadow-md);
+  padding: 2rem 2rem 1.75rem;
+}
+
+.auth-card .eyebrow {
+  font-family: var(--font-mono);
+  font-size: 0.7rem;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  color: var(--teal);
+  margin-bottom: 0.35rem;
+}
+
+.role-toggle {
+  display: flex;
+  gap: 0.4rem;
+  margin-bottom: 1.5rem;
+  background: var(--sage);
+  padding: 0.3rem;
+  border-radius: var(--radius);
+}
+.role-toggle button {
+  all: unset;
+  flex: 1;
+  text-align: center;
+  padding: 0.5rem 0;
+  border-radius: 8px;
+  cursor: pointer;
+  font-size: 0.85rem;
+  font-weight: 600;
+  color: var(--ink-soft);
+}
+.role-toggle button.active {
+  background: var(--card);
+  color: var(--ink);
+  box-shadow: var(--shadow-sm);
+}
+
+label {
+  display: block;
+  font-size: 0.82rem;
+  font-weight: 600;
+  color: var(--ink-soft);
+  margin-bottom: 0.3rem;
+}
+
+input[type="text"], input[type="tel"], input[type="number"], input[type="date"],
+select, textarea {
+  width: 100%;
+  padding: 0.65rem 0.75rem;
+  border: 1px solid var(--line);
+  border-radius: var(--radius);
+  background: #fff;
+  color: var(--ink);
+  margin-bottom: 1rem;
+}
+textarea { resize: vertical; min-height: 70px; }
+
+input:invalid.touched { border-color: var(--coral); }
+
+.field-error {
+  font-size: 0.78rem;
+  color: var(--coral);
+  margin: -0.75rem 0 1rem;
+  display: none;
+}
+.field-error.show { display: block; }
+
+.btn {
+  all: unset;
+  cursor: pointer;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.4rem;
+  padding: 0.65rem 1.1rem;
+  border-radius: var(--radius);
+  font-weight: 600;
+  font-size: 0.9rem;
+  transition: transform 0.08s ease, filter 0.15s ease;
+}
+.btn:active { transform: translateY(1px); }
+.btn-primary { background: var(--teal); color: #fff; width: 100%; }
+.btn-primary:hover { filter: brightness(1.08); }
+.btn-secondary { background: var(--sage); color: var(--ink); }
+.btn-secondary:hover { filter: brightness(0.97); }
+.btn-danger { background: var(--coral-soft); color: var(--coral); }
+.btn-ghost { background: transparent; color: var(--teal); padding-left: 0.2rem; padding-right: 0.2rem; }
+.btn-sm { padding: 0.4rem 0.7rem; font-size: 0.8rem; }
+.btn:disabled { opacity: 0.5; cursor: not-allowed; }
+
+.switch-line {
+  text-align: center;
+  font-size: 0.85rem;
+  color: var(--ink-soft);
+  margin-top: 1rem;
+}
+
+/* ============================================================================
+   Signature element: the Queue Ticket
+   Modeled on a physical deli/clinic paper ticket — perforated edge via a
+   repeating radial-gradient, large mono digits, a soft pulse when it's you.
+   ============================================================================ */
+
+.ticket {
+  position: relative;
+  background: var(--teal-dark);
+  color: #fff;
+  border-radius: var(--radius-lg);
+  padding: 1.6rem 1.6rem 1.9rem;
+  overflow: hidden;
+}
+
+.ticket::after {
+  content: "";
+  position: absolute;
+  left: 0; right: 0; bottom: 0;
+  height: 14px;
+  background: radial-gradient(circle at 10px 0, transparent 7px, var(--teal-dark) 7px);
+  background-size: 20px 14px;
+  background-repeat: repeat-x;
+}
+
+.ticket .ticket-label {
+  font-family: var(--font-mono);
+  font-size: 0.7rem;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  opacity: 0.75;
+}
+
+.ticket .ticket-number {
+  font-family: var(--font-mono);
+  font-size: 3.4rem;
+  font-weight: 600;
+  line-height: 1.1;
+  margin: 0.2rem 0 0.6rem;
+}
+
+.ticket .ticket-row {
+  display: flex;
+  justify-content: space-between;
+  font-size: 0.85rem;
+  opacity: 0.9;
+  border-top: 1px dashed rgba(255,255,255,0.25);
+  padding-top: 0.6rem;
+  margin-top: 0.4rem;
+}
+
+.ticket.your-turn {
+  animation: pulse-glow 1.8s ease-in-out infinite;
+}
+
+@keyframes pulse-glow {
+  0%, 100% { box-shadow: 0 0 0 0 rgba(63,125,92,0.5); }
+  50% { box-shadow: 0 0 0 10px rgba(63,125,92,0); }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .ticket.your-turn { animation: none; }
+}
+
+/* ============================================================================
+   Tables / queue list
+   ============================================================================ */
+
+table { width: 100%; border-collapse: collapse; font-size: 0.88rem; }
+th {
+  text-align: left;
+  font-family: var(--font-mono);
+  font-size: 0.7rem;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+  color: var(--ink-soft);
+  padding: 0.5rem 0.6rem;
+  border-bottom: 1px solid var(--line);
+}
+td {
+  padding: 0.6rem;
+  border-bottom: 1px solid var(--line);
+  vertical-align: middle;
+}
+tr.current-row { background: var(--ok-soft); }
+tr.skipped-row { opacity: 0.6; }
+
+.badge {
+  display: inline-block;
+  font-size: 0.72rem;
+  font-weight: 600;
+  padding: 0.2rem 0.55rem;
+  border-radius: 100px;
+}
+.badge.waiting { background: var(--sage); color: var(--ink-soft); }
+.badge.in-progress { background: var(--ok-soft); color: var(--ok); }
+.badge.completed { background: var(--line); color: var(--ink-soft); }
+.badge.skipped { background: var(--amber-soft); color: var(--amber); }
+.badge.valid { background: var(--ok-soft); color: var(--ok); }
+.badge.due { background: var(--coral-soft); color: var(--coral); }
+
+.row-actions { display: flex; gap: 0.35rem; flex-wrap: wrap; }
+
+.token-cell {
+  font-family: var(--font-mono);
+  font-weight: 600;
+}
+
+/* ============================================================================
+   Timeline (Medical History)
+   ============================================================================ */
+
+.timeline { position: relative; padding-left: 1.4rem; }
+.timeline::before {
+  content: "";
+  position: absolute;
+  left: 5px; top: 4px; bottom: 4px;
+  width: 2px;
+  background: var(--line);
+}
+.timeline-item { position: relative; padding-bottom: 1.5rem; }
+.timeline-item::before {
+  content: "";
+  position: absolute;
+  left: -1.4rem; top: 3px;
+  width: 10px; height: 10px;
+  border-radius: 50%;
+  background: var(--teal);
+  border: 2px solid var(--paper);
+}
+.timeline-item .date {
+  font-family: var(--font-mono);
+  font-size: 0.75rem;
+  color: var(--ink-soft);
+}
+
+/* ============================================================================
+   Prescription builder
+   ============================================================================ */
+
+.rx-row {
+  display: grid;
+  grid-template-columns: 2fr 1fr 1fr auto;
+  gap: 0.5rem;
+  align-items: start;
+}
+
+.settings-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
+  gap: 1rem;
+}
+
+.toggle-row {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 1rem;
+}
+
+.switch {
+  position: relative;
+  width: 46px; height: 26px;
+  flex-shrink: 0;
+}
+.switch input { opacity: 0; width: 0; height: 0; }
+.switch .slider {
+  position: absolute; inset: 0;
+  background: var(--line);
+  border-radius: 100px;
+  cursor: pointer;
+  transition: background 0.15s ease;
+}
+.switch .slider::before {
+  content: "";
+  position: absolute;
+  width: 20px; height: 20px;
+  left: 3px; top: 3px;
+  background: #fff;
+  border-radius: 50%;
+  transition: transform 0.15s ease;
+  box-shadow: var(--shadow-sm);
+}
+.switch input:checked + .slider { background: var(--ok); }
+.switch input:checked + .slider::before { transform: translateX(20px); }
+
+.empty-state {
+  text-align: center;
+  padding: 2.5rem 1rem;
+  color: var(--ink-soft);
+}
+.empty-state .glyph { font-size: 1.8rem; margin-bottom: 0.5rem; }
+
+.toast {
+  position: fixed;
+  bottom: 1.25rem;
+  left: 50%;
+  transform: translateX(-50%);
+  background: var(--ink);
+  color: #fff;
+  padding: 0.65rem 1.1rem;
+  border-radius: var(--radius);
+  font-size: 0.85rem;
+  box-shadow: var(--shadow-md);
+  z-index: 100;
+  opacity: 0;
+  pointer-events: none;
+  transition: opacity 0.2s ease, transform 0.2s ease;
+}
+.toast.show { opacity: 1; transform: translateX(-50%) translateY(-4px); }
+.toast.error { background: var(--coral); }
+.toast.success { background: var(--ok); }

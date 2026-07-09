@@ -1,0 +1,356 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>Clinic Queue — Patient, Compounder &amp; Doctor Portal</title>
+<link rel="stylesheet" href="styles.css" />
+</head>
+<body>
+
+<!-- ============================================================
+     AUTH SCREEN — no OTP. Patients "log in" with phone number as
+     username + name as password. Staff pick a role and enter a
+     shared password only (no username field).
+     ============================================================ -->
+<section id="screen-auth" class="screen">
+  <div class="auth-wrap">
+    <div class="auth-card">
+      <div class="eyebrow">Clinic Queue</div>
+      <h1 id="auth-title">Sign in</h1>
+
+      <div class="role-toggle">
+        <button type="button" class="active" id="tab-patient">Patient</button>
+        <button type="button" id="tab-staff">Staff</button>
+      </div>
+
+      <!-- Patient login: phone = username, name = password -->
+      <div id="auth-patient-form">
+        <p style="color:var(--ink-soft); font-size:0.9rem;">
+          First time here? Just fill this in once — the same number and name
+          will log you back in later.
+        </p>
+
+        <label for="input-name">Your name</label>
+        <input type="text" id="input-name" placeholder="e.g. Asha Verma" />
+        <div class="field-error" id="err-name">Enter your name (at least 2 characters).</div>
+
+        <label for="input-phone">Mobile number</label>
+        <div style="display:flex; gap:0.5rem;">
+          <span style="padding:0.65rem 0; font-family:var(--font-mono); color:var(--ink-soft);">+91</span>
+          <input type="tel" id="input-phone" placeholder="98765 43210" maxlength="10" inputmode="numeric" />
+        </div>
+        <div class="field-error" id="err-phone">Enter a valid 10-digit Indian mobile number.</div>
+        <div class="field-error" id="err-patient-mismatch">That name doesn't match our records for this number.</div>
+
+        <button class="btn btn-primary" id="btn-patient-continue">Continue</button>
+      </div>
+
+      <!-- Staff login: role + shared password, no username -->
+      <div id="auth-staff-form" class="hidden">
+        <p style="color:var(--ink-soft); font-size:0.9rem;">
+          Choose your role and enter the clinic staff password.
+        </p>
+
+        <label>Role</label>
+        <div class="role-toggle" style="margin-bottom:1rem;">
+          <button type="button" class="active" data-staff-role="compounder">Compounder</button>
+          <button type="button" data-staff-role="doctor">Doctor</button>
+        </div>
+
+        <label for="input-staff-password">Password</label>
+        <input type="text" id="input-staff-password" placeholder="Staff password" />
+        <div class="field-error" id="err-staff">Incorrect staff password.</div>
+
+        <button class="btn btn-primary" id="btn-staff-continue">Sign in</button>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ============================================================
+     PATIENT PORTAL
+     ============================================================ -->
+<section id="screen-patient" class="screen hidden">
+  <div class="app-shell">
+    <aside class="sidebar">
+      <div class="brand"><span class="dot"></span> Clinic Queue</div>
+      <nav>
+        <button class="nav-btn active" data-panel="patient-panel-status">Live Status</button>
+        <button class="nav-btn" data-panel="patient-panel-book">Book Appointment</button>
+        <button class="nav-btn" data-panel="patient-panel-history">Medical History</button>
+      </nav>
+      <div class="user-chip">
+        <strong id="patient-name-chip">—</strong>
+        <span id="patient-phone-chip">—</span>
+        <button class="logout-btn" id="patient-logout">Sign out</button>
+      </div>
+    </aside>
+
+    <main class="main">
+      <div class="main-header">
+        <h1>Welcome back</h1>
+        <span class="status-pill" id="patient-clinic-status">—</span>
+      </div>
+
+      <!-- Live Status panel -->
+      <div id="patient-panel-status" class="panel section">
+        <div id="patient-no-appointment" class="card empty-state hidden">
+          <div class="glyph">🩺</div>
+          <h3>No active appointment</h3>
+          <p>Book a slot to see your live token status here.</p>
+        </div>
+
+        <div id="patient-ticket-wrap" class="grid grid-2 hidden">
+          <div class="ticket" id="patient-ticket">
+            <div class="ticket-label">Your token</div>
+            <div class="ticket-number" id="patient-token-number">—</div>
+            <div class="ticket-row">
+              <span>Status</span>
+              <span id="patient-token-status">—</span>
+            </div>
+          </div>
+
+          <div class="card">
+            <h3>Queue snapshot</h3>
+            <div class="grid grid-3" style="margin-top:0.75rem;">
+              <div>
+                <div style="font-family:var(--font-mono); font-size:1.6rem; font-weight:600;" id="patient-now-serving">—</div>
+                <div style="font-size:0.78rem; color:var(--ink-soft);">Now serving</div>
+              </div>
+              <div>
+                <div style="font-family:var(--font-mono); font-size:1.6rem; font-weight:600;" id="patient-queue-count">—</div>
+                <div style="font-size:0.78rem; color:var(--ink-soft);">Patients waiting</div>
+              </div>
+              <div>
+                <div style="font-family:var(--font-mono); font-size:1.6rem; font-weight:600;" id="patient-ewt">—</div>
+                <div style="font-size:0.78rem; color:var(--ink-soft);">Est. wait (min)</div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Book Appointment panel -->
+      <div id="patient-panel-book" class="panel section hidden">
+        <div class="card" style="max-width:480px;">
+          <h2>Book an appointment</h2>
+          <label for="input-book-date">Choose a date</label>
+          <input type="date" id="input-book-date" />
+          <p id="book-window-hint" style="font-size:0.82rem; color:var(--ink-soft); margin-top:-0.5rem;">—</p>
+          <div id="book-fee-status" class="card" style="background:var(--sage); margin:1rem 0;">
+            <strong id="book-fee-label">—</strong>
+            <p id="book-fee-detail" style="margin:0; font-size:0.85rem;"></p>
+          </div>
+          <button class="btn btn-primary" id="btn-book-appointment">Confirm booking</button>
+        </div>
+      </div>
+
+      <!-- Medical History panel -->
+      <div id="patient-panel-history" class="panel section hidden">
+        <div class="card">
+          <h2>Medical history</h2>
+          <div class="timeline" id="patient-history-timeline">
+            <div class="empty-state"><div class="glyph">📋</div>No past visits yet.</div>
+          </div>
+        </div>
+      </div>
+    </main>
+  </div>
+</section>
+
+<!-- ============================================================
+     COMPOUNDER (STAFF) PORTAL
+     ============================================================ -->
+<section id="screen-compounder" class="screen hidden">
+  <div class="app-shell">
+    <aside class="sidebar">
+      <div class="brand"><span class="dot"></span> Clinic Queue</div>
+      <nav>
+        <button class="nav-btn active" data-panel="comp-panel-queue">Queue</button>
+        <button class="nav-btn" data-panel="comp-panel-settings">Clinic Settings</button>
+      </nav>
+      <div class="user-chip">
+        <strong id="comp-name-chip">—</strong>
+        <span>Compounder</span>
+        <button class="logout-btn" id="comp-logout">Sign out</button>
+      </div>
+    </aside>
+
+    <main class="main">
+      <div class="main-header">
+        <h1>Queue control</h1>
+        <span class="status-pill" id="comp-clinic-status">—</span>
+      </div>
+
+      <!-- Queue panel -->
+      <div id="comp-panel-queue" class="panel section">
+        <div class="card" style="margin-bottom:1rem;">
+          <div class="toggle-row">
+            <div>
+              <h3 style="margin-bottom:0.1rem;">Clinic open</h3>
+              <p style="margin:0; font-size:0.82rem; color:var(--ink-soft);">Toggle off to stop new bookings and pause the queue.</p>
+            </div>
+            <label class="switch">
+              <input type="checkbox" id="toggle-clinic-open" />
+              <span class="slider"></span>
+            </label>
+          </div>
+        </div>
+
+        <div class="grid grid-3" style="margin-bottom:1rem;">
+          <div class="card">
+            <div style="font-family:var(--font-mono); font-size:1.8rem; font-weight:600;" id="comp-current-token">—</div>
+            <div style="font-size:0.78rem; color:var(--ink-soft);">Now serving</div>
+          </div>
+          <div class="card">
+            <div style="font-family:var(--font-mono); font-size:1.8rem; font-weight:600;" id="comp-waiting-count">—</div>
+            <div style="font-size:0.78rem; color:var(--ink-soft);">Waiting</div>
+          </div>
+          <div class="card">
+            <div style="font-family:var(--font-mono); font-size:1.8rem; font-weight:600;" id="comp-avg-time">—</div>
+            <div style="font-size:0.78rem; color:var(--ink-soft);">Avg. min / patient</div>
+            <button class="btn btn-ghost btn-sm" id="btn-edit-avg-time" style="padding:0;">Override</button>
+          </div>
+        </div>
+
+        <div class="card">
+          <div class="card-title-row">
+            <h3>Today's queue</h3>
+            <button class="btn btn-primary btn-sm" id="btn-call-next">Call next patient</button>
+          </div>
+          <table>
+            <thead>
+              <tr>
+                <th>Token</th><th>Patient</th><th>Status</th><th>Fees</th><th></th>
+              </tr>
+            </thead>
+            <tbody id="comp-queue-tbody">
+              <tr><td colspan="5" class="empty-state">No appointments for today yet.</td></tr>
+            </tbody>
+          </table>
+        </div>
+
+        <div class="card" style="margin-top:1rem;">
+          <h3>Skipped patients</h3>
+          <table>
+            <thead><tr><th>Token</th><th>Patient</th><th></th></tr></thead>
+            <tbody id="comp-skipped-tbody">
+              <tr><td colspan="3" class="empty-state">No skipped patients.</td></tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
+
+      <!-- Settings panel -->
+      <div id="comp-panel-settings" class="panel section hidden">
+        <div class="card">
+          <h2>Clinic settings</h2>
+          <div class="settings-grid">
+            <div>
+              <label for="setting-max-patients">Max patients per day</label>
+              <input type="number" id="setting-max-patients" min="1" />
+            </div>
+            <div>
+              <label for="setting-booking-window">Booking window (days ahead)</label>
+              <input type="number" id="setting-booking-window" min="1" />
+            </div>
+            <div>
+              <label for="setting-fee-validity">Fee validity period (days)</label>
+              <input type="number" id="setting-fee-validity" min="1" />
+            </div>
+            <div>
+              <label for="setting-avg-time">Initial avg. time per patient (min)</label>
+              <input type="number" id="setting-avg-time" min="1" />
+            </div>
+          </div>
+          <button class="btn btn-primary" id="btn-save-settings" style="margin-top:0.5rem; width:auto;">Save settings</button>
+        </div>
+      </div>
+    </main>
+  </div>
+</section>
+
+<!-- ============================================================
+     DOCTOR PORTAL
+     ============================================================ -->
+<section id="screen-doctor" class="screen hidden">
+  <div class="app-shell">
+    <aside class="sidebar">
+      <div class="brand"><span class="dot"></span> Clinic Queue</div>
+      <nav>
+        <button class="nav-btn active" data-panel="doc-panel-consult">Consultation</button>
+      </nav>
+      <div class="user-chip">
+        <strong id="doc-name-chip">—</strong>
+        <span>Doctor</span>
+        <button class="logout-btn" id="doc-logout">Sign out</button>
+      </div>
+    </aside>
+
+    <main class="main">
+      <div class="main-header"><h1>Consultation room</h1></div>
+
+      <div id="doc-panel-consult" class="panel section">
+        <div id="doc-no-patient" class="card empty-state">
+          <div class="glyph">👨‍⚕️</div>
+          <h3>No patient called yet</h3>
+          <p>Waiting for the compounder to call the next token.</p>
+        </div>
+
+        <div id="doc-active-patient" class="hidden">
+          <div class="grid grid-2" style="margin-bottom:1rem;">
+            <div class="ticket">
+              <div class="ticket-label">Current patient · token</div>
+              <div class="ticket-number" id="doc-current-token">—</div>
+              <div class="ticket-row"><span id="doc-current-name">—</span><span id="doc-current-phone">—</span></div>
+            </div>
+
+            <div class="card">
+              <h3>Past visit history</h3>
+              <div class="timeline" id="doc-history-timeline" style="max-height:220px; overflow:auto;">
+                <div class="empty-state">No prior visits on record.</div>
+              </div>
+            </div>
+          </div>
+
+          <div class="card">
+            <h3>Consultation form</h3>
+            <label for="doc-chief-complaints">Chief complaints</label>
+            <textarea id="doc-chief-complaints" placeholder="Describe presenting symptoms..."></textarea>
+
+            <div class="grid grid-3">
+              <div>
+                <label for="doc-vital-bp">Blood pressure</label>
+                <input type="text" id="doc-vital-bp" placeholder="120/80" />
+              </div>
+              <div>
+                <label for="doc-vital-pulse">Pulse (bpm)</label>
+                <input type="number" id="doc-vital-pulse" />
+              </div>
+              <div>
+                <label for="doc-vital-weight">Weight (kg)</label>
+                <input type="number" id="doc-vital-weight" />
+              </div>
+            </div>
+
+            <label for="doc-diagnosis">Diagnosis</label>
+            <textarea id="doc-diagnosis" placeholder="Clinical diagnosis..."></textarea>
+
+            <h4 style="margin-top:1rem;">Prescription</h4>
+            <div id="rx-rows"></div>
+            <button class="btn btn-secondary btn-sm" id="btn-add-rx-row" style="margin-bottom:1rem;">+ Add medicine</button>
+
+            <button class="btn btn-primary" id="btn-complete-visit" style="width:auto;">Complete visit &amp; send prescription</button>
+          </div>
+        </div>
+      </div>
+    </main>
+  </div>
+</section>
+
+<div class="toast" id="toast"></div>
+
+<script type="module" src="app.js"></script>
+</body>
+</html>

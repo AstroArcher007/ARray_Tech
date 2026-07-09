@@ -1,0 +1,119 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover" />
+  <title>Amaranth — Digital Menu</title>
+  <meta name="description" content="Amaranth restaurant digital menu — browse today's specials and our full menu." />
+
+  <!-- Google Fonts: Fraunces (display), Inter (body), Space Mono (data/prices) -->
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link
+    href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,500;9..144,600;9..144,700&family=Inter:wght@400;500;600&family=Space+Mono:wght@400;700&display=swap"
+    rel="stylesheet"
+  />
+
+  <link rel="stylesheet" href="style.css" />
+</head>
+<body>
+
+  <main class="menu-shell fade-in">
+
+    <!-- ============================== HEADER ============================== -->
+    <header class="menu-header">
+      <span class="menu-header__eyebrow">Est. Digital Menu</span>
+      <h1 class="menu-header__title">Amaranth</h1>
+      <p class="menu-header__subtitle">Seasonal plates, honestly sourced.</p>
+    </header>
+
+    <!-- ============================== SEARCH ============================== -->
+    <div class="menu-toolbar">
+      <div class="menu-search">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+          <circle cx="11" cy="11" r="7"></circle>
+          <line x1="21" y1="21" x2="16.65" y2="16.65"></line>
+        </svg>
+        <input type="text" id="searchInput" placeholder="Search dishes..." aria-label="Search the menu" />
+      </div>
+    </div>
+
+    <!-- ============================== TODAY'S SPECIAL ============================== -->
+    <section class="special-section" aria-labelledby="specialHeading">
+      <div class="special-section__label" id="specialHeading">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+          <path d="M12 2l2.6 6.6L21 11l-6.4 2.4L12 20l-2.6-6.6L3 11l6.4-2.4L12 2z"></path>
+        </svg>
+        Today's Special
+      </div>
+      <div class="special-track" id="specialTrack">
+        <!-- Special cards injected by app.js -->
+      </div>
+    </section>
+
+    <!-- ============================== DIET FILTER ============================== -->
+    <div class="diet-filter-bar">
+      <div class="diet-filter" id="dietFilter" role="group" aria-label="Filter the menu by diet type">
+        <button type="button" class="diet-filter__btn is-active" data-diet="all">
+          All
+        </button>
+        <button type="button" class="diet-filter__btn" data-diet="veg">
+          <svg class="diet-marker diet-marker--veg" viewBox="0 0 16 16"><rect x="1" y="1" width="14" height="14" rx="2" fill="none" stroke="currentColor" stroke-width="1.4"></rect><circle cx="8" cy="8" r="3.4" fill="currentColor"></circle></svg>
+          Veg
+        </button>
+        <button type="button" class="diet-filter__btn" data-diet="egg">
+          <svg class="diet-marker diet-marker--egg" viewBox="0 0 16 16"><rect x="1" y="1" width="14" height="14" rx="2" fill="none" stroke="currentColor" stroke-width="1.4"></rect><circle cx="8" cy="8" r="3.4" fill="currentColor"></circle></svg>
+          Egg
+        </button>
+        <button type="button" class="diet-filter__btn" data-diet="non-veg">
+          <svg class="diet-marker diet-marker--nonveg" viewBox="0 0 16 16"><rect x="1" y="1" width="14" height="14" rx="2" fill="none" stroke="currentColor" stroke-width="1.4"></rect><circle cx="8" cy="8" r="3.4" fill="currentColor"></circle></svg>
+          Non-veg
+        </button>
+      </div>
+      <div class="diet-legend" aria-hidden="true">
+        <span class="diet-legend__item">
+          <span class="spice-marker"><svg viewBox="0 0 16 16"><path fill="#4a7c46" d="M6.9 1.3c.25-.45.8-.65 1.25-.45.45.2.65.7.5 1.15-.1.3-.35.55-.65.7l-1.5.7-.05-1.5c0-.2.15-.4.45-.6z"/><path fill="currentColor" d="M7.6 2.5c.9-.35 1.9-.15 2.6.5 1.9 1.75 2.35 4.7 1.05 6.95-1.05 1.85-2.85 3.3-4.9 3.95-.85.25-1.5-.6-1.15-1.4.65-1.5.55-3.25-.3-4.65-.85-1.45-.75-3.35.45-4.65.6-.65 1.35-.9 2.25-.7z"/><path fill="#fff" opacity="0.35" d="M7.3 4.1c.5-.35 1.15-.35 1.6.05.85.75 1.05 2.05.45 3.05-.35.6-.85 1.1-1.45 1.4-.35.15-.7-.15-.6-.5.25-.85.15-1.8-.3-2.55-.25-.4-.15-.9.3-1.15z"/></svg></span>
+          Spicy (1&ndash;3)
+        </span>
+        <span class="diet-legend__item">
+          <svg class="alcohol-marker" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M8 22h8M12 15v7M5 2h14l-1.5 7.5a5.5 5.5 0 01-11 0L5 2z"></path></svg>
+          Contains alcohol
+        </span>
+      </div>
+    </div>
+
+    <!-- ============================== CATEGORIES ============================== -->
+    <section aria-label="Full menu">
+      <div class="category-nav-wrap">
+        <div class="category-nav" id="categoryNav">
+          <!-- Category tabs injected by app.js -->
+        </div>
+        <div class="category-nav__indicator" id="categoryNavIndicator"></div>
+      </div>
+      <div class="category-viewport" id="categoryViewport">
+        <div class="category-track" id="categoryTrack">
+          <div class="category-panel">
+            <div class="loader">
+              <div class="loader__ring"></div>
+              <span class="loader__text">Loading menu…</span>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <footer class="menu-footer">
+      <p>Prices include applicable taxes. Please inform your server of any allergies.</p>
+      <p style="margin-top: 6px;"><a href="admin.html">Restaurant staff login</a></p>
+    </footer>
+
+  </main>
+
+  <!-- Firebase SDKs (compat build for simple script-tag usage) -->
+  <script src="https://www.gstatic.com/firebasejs/10.12.2/firebase-app-compat.js"></script>
+  <script src="https://www.gstatic.com/firebasejs/10.12.2/firebase-firestore-compat.js"></script>
+
+  <script src="firebase-config.js"></script>
+  <script src="app.js"></script>
+</body>
+</html>

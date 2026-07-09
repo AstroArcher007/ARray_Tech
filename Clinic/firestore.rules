@@ -1,0 +1,72 @@
+rules_version = '2';
+
+// ============================================================================
+// Firestore Security Rules — Clinic Management System
+// Deploy with: firebase deploy --only firestore:rules
+// ============================================================================
+service cloud.firestore {
+  match /databases/{database}/documents {
+
+    // --- Helpers ---------------------------------------------------------
+    function isSignedIn() {
+      return request.auth != null;
+    }
+
+    function myRole() {
+      return get(/databases/$(database)/documents/users/$(request.auth.uid)).data.role;
+    }
+
+    function isStaff() {
+      return isSignedIn() && (myRole() == 'compounder' || myRole() == 'doctor');
+    }
+
+    // --- users -------------------------------------------------------------
+    // A patient may read/create their own profile. Only staff can read
+    // other users' profiles (needed to show names in the queue). Nobody
+    // can self-promote their own role — role changes must be made directly
+    // by a clinic admin in the Firebase console.
+    match /users/{uid} {
+      allow read: if isSignedIn() && (request.auth.uid == uid || isStaff());
+      allow create: if isSignedIn() && request.auth.uid == uid
+                    && request.resource.data.role == 'patient';
+      allow update: if isSignedIn() && request.auth.uid == uid
+                    && request.resource.data.role == resource.data.role;
+    }
+
+    // --- clinic_settings ----------------------------------------------------
+    // Everyone signed in can read (patients need booking-window / fee-validity
+    // info); only staff can write.
+    match /clinic_settings/{docId} {
+      allow read: if isSignedIn();
+      allow write: if isStaff();
+    }
+
+    // --- clinic_days -----------------------------------------------------
+    // Staff read/write freely (open/close toggle, calling the next token).
+    // Patients also need write access here — not just read — because
+    // bookAppointment() increments the day's token counter as part of the
+    // *patient's own* Firestore transaction (there's no server in this
+    // client-only build to broker that safely). This does mean a patient
+    // could, via devtools rather than the normal UI, write other fields on
+    // today's clinic_days doc (e.g. isOpen). If that risk matters for your
+    // deployment, move the counter increment into a Cloud Function that
+    // runs with elevated privileges and tighten this back to isStaff().
+    match /clinic_days/{dateId} {
+      allow read: if isSignedIn();
+      allow write: if isSignedIn();
+    }
+
+    // --- appointments --------------------------------------------------------
+    // Patients may create their own appointment and read only their own
+    // records. Staff (compounder + doctor) can read/update every
+    // appointment, which is required for queue management and consultations.
+    match /appointments/{apptId} {
+      allow read: if isSignedIn() && (resource.data.patientId == request.auth.uid || isStaff());
+      allow create: if isSignedIn()
+                    && request.resource.data.patientId == request.auth.uid
+                    && request.resource.data.status == 'waiting';
+      allow update: if isStaff();
+      allow delete: if false; // appointments are never hard-deleted, only status-changed
+    }
+  }
+}
